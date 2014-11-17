@@ -25,13 +25,19 @@ package test.lori;
 public class Request {
 
     private long id;
+    private String message;
 
-    public Request(long id) {
+    public Request(long id, String message) {
         this.id = id;
+        this.message = message;
     }
 
     public long id() {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return message;
+    }
 }

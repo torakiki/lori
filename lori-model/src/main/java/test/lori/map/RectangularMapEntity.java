@@ -26,13 +26,30 @@ import test.lori.geometry.Point;
  *
  */
 public class RectangularMapEntity {
-    private Point position;
-    private Point bottomRight;
+    private int width;
+    private int height;
+    private Point position = null;
+    private Point bottomRight = null;
 
-    public RectangularMapEntity(int x, int y, int width, int height) {
-        require(x >= 0 && y >= 0);
+    public RectangularMapEntity(int width, int height) {
         require(width >= 0 && height >= 0);
-        this.position = new Point(x, y);
+        this.width = width;
+        this.height = height;
+    }
+
+    public int width() {
+        return width;
+    }
+
+    public int height() {
+        return height;
+    }
+
+    public void dropAtPosition(Point position) {
+        // can be dropped only once to the map
+        require(this.position == null);
+        require(position.x() >= 0 && position.y() >= 0);
+        this.position = position.copy();
         this.bottomRight = position().copy();
         this.bottomRight.move(width, height);
     }
@@ -57,8 +74,8 @@ public class RectangularMapEntity {
     }
 
     public void alignRightTile(int tilesSizeInPixel) {
-        int column = 1 + (bottomRight.x() / tilesSizeInPixel);
-        int rightEdgeX = (column * tilesSizeInPixel) - 1;
+        int column = bottomRight.x() / tilesSizeInPixel;
+        int rightEdgeX = (column * tilesSizeInPixel) + tilesSizeInPixel - 1;
         move(rightEdgeX - bottomRight.x(), 0);
     }
 
@@ -66,5 +83,17 @@ public class RectangularMapEntity {
         int column = position.x() / tilesSizeInPixel;
         int leftEdgeX = column * tilesSizeInPixel;
         move(-position.x() + leftEdgeX, 0);
+    }
+
+    public void alignTopTile(int tilesSizeInPixel) {
+        int row = position.y() / tilesSizeInPixel;
+        int topEdgeX = row * tilesSizeInPixel;
+        move(0, -position.y() + topEdgeX);
+    }
+
+    public void alignBottomTile(int tilesSizeInPixel) {
+        int row = position.y() / tilesSizeInPixel;
+        int bottomEdgeX = (row * tilesSizeInPixel) + tilesSizeInPixel - 1;
+        move(0, bottomEdgeX - bottomRight.y());
     }
 }

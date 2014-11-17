@@ -20,19 +20,46 @@ package test.lori.map;
 
 import static test.lori.util.RequireUtils.require;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import test.lori.geometry.Point;
 
 /**
  * @author Andrea Vacondio
  *
  */
 public class BlockingTileLayer {
-    private List<List<Boolean>> tiles;
+    private static final Logger LOG = LoggerFactory.getLogger(BlockingTileLayer.class);
+
+    // a list of rows of tiles
+    private List<List<Boolean>> tiles = new ArrayList<>(new ArrayList<>());
     private int tilesSizeInPixel;
 
-    public BlockingTileLayer(int tilesSizeInPixel) {
+    public BlockingTileLayer(int tilesSizeInPixel, int width, int height) {
         require(tilesSizeInPixel > 0);
+        require(width > 0 && height > 0);
+        tiles = Collections.nCopies(height, Collections.nCopies(width, Boolean.FALSE));
         this.tilesSizeInPixel = tilesSizeInPixel;
+    }
+
+    /**
+     * @return if the entity can be dropped at the given point without colliding with anything
+     */
+    public boolean canDrop(RectangularMapEntity entity, Point point) {
+        return !isCollisionRow(tilesRowIndexFor(point.y()), tilesColumnIndexFor(point.x()),
+                tilesColumnIndexFor(point.x() + entity.width()))
+                && !isCollisionRow(tilesRowIndexFor(point.y() + entity.height()), tilesColumnIndexFor(point.x()),
+                        tilesColumnIndexFor(point.x() + entity.width()))
+                && !isCollisionColumn(tilesColumnIndexFor(point.x()), tilesRowIndexFor(point.y()),
+                        tilesRowIndexFor(point.y() + entity.height()))
+                && !isCollisionColumn(tilesColumnIndexFor(point.x() + entity.width()), tilesRowIndexFor(point.y()),
+                        tilesRowIndexFor(point.y() + entity.height()));
+
     }
 
     public boolean canMoveRight(RectangularMapEntity entity, int amount) {
@@ -51,22 +78,53 @@ public class BlockingTileLayer {
         return !entityCollideWithRow(entity, tilesRowIndexFor(entity.position().y() + amount));
     }
 
-    private boolean entityCollideWithColumn(RectangularMapEntity entity, int tilesColumn) {
-        for (int i = tilesRowIndexFor(entity.position().y()); i <= tilesRowIndexFor(entity.bottomRightPosition().y()); i++) {
-            if (tiles.get(i).get(tilesColumn)) {
-                return true;
+    /**
+     * @return true if the given colNum collides with the given entity
+     */
+    private boolean entityCollideWithColumn(RectangularMapEntity entity, int colNum) {
+        return isCollisionColumn(colNum, tilesRowIndexFor(entity.position().y()), tilesRowIndexFor(entity
+                .bottomRightPosition().y()));
+    }
+
+    /**
+     * @return true if at least one of the tiles in colNum, starting from startRow to endRow, is a blocking tile.
+     */
+    private boolean isCollisionColumn(int colNum, int startRow, int endRow) {
+        try {
+            for (int i = startRow; i <= endRow; i++) {
+                if (tiles.get(i).get(colNum)) {
+                    return true;
+                }
             }
+        } catch (IndexOutOfBoundsException e) {
+            LOG.warn("Invalid tiles coordinates: [col=" + colNum + ", startRow=" + startRow + ", endRow=" + endRow
+                    + "]", e);
         }
         return false;
     }
 
-    private boolean entityCollideWithRow(RectangularMapEntity entity, int tilesRow) {
-        List<Boolean> row = tiles.get(tilesRow);
-        for (int i = tilesColumnIndexFor(entity.position().x()); i <= tilesColumnIndexFor(entity.bottomRightPosition()
-                .x()); i++) {
-            if (row.get(i)) {
-                return true;
+    /**
+     * @return true if the given rowNum collides with the given entity
+     */
+    private boolean entityCollideWithRow(RectangularMapEntity entity, int rowNum) {
+        return isCollisionRow(rowNum, tilesColumnIndexFor(entity.position().x()), tilesColumnIndexFor(entity
+                .bottomRightPosition().x()));
+    }
+
+    /**
+     * @return true if at least one of the tiles in rowNum, starting from startColumn to endColumn, is a blocking tile.
+     */
+    private boolean isCollisionRow(int rowNum, int startColumn, int endColumn) {
+        try {
+            List<Boolean> row = tiles.get(rowNum);
+            for (int i = startColumn; i <= endColumn; i++) {
+                if (row.get(i)) {
+                    return true;
+                }
             }
+        } catch (IndexOutOfBoundsException e) {
+            LOG.warn("Invalid tiles coordinates: [row=" + rowNum + ", startCol" + startColumn + ", endCol" + endColumn
+                    + "]", e);
         }
         return false;
     }

@@ -24,16 +24,23 @@ package test.lori;
  */
 public class Response {
     private long id;
+    private String message;
 
-    private Response(long id) {
+    private Response(long id, String message) {
         this.id = id;
+        this.message = message;
     }
 
     public long id() {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return message;
+    }
+
     public static Response forRequest(Request req) {
-        return new Response(req.id());
+        return new Response(req.id(), req.toString());
     }
 }

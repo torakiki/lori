@@ -26,4 +26,8 @@ import test.lori.map.RectangularMapEntity;
  */
 public class Player extends RectangularMapEntity {
 
+    public Player(int width, int height) {
+        super(width, height);
+    }
+
 }

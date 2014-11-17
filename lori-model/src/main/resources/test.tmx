@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="DungeonCrawl_ProjectUtumnoTileset" tilewidth="32" tileheight="32">
+  <image source="DungeonCrawl_ProjectUtumnoTileset.png" width="2048" height="1536"/>
+ </tileset>
+ <layer name="MainLevel" width="50" height="50">
+  <properties>
+   <property name="blocking" value="false"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzlmV2OwzAIhFfK/Y+Uhyhtsv9nWlWqJToLY3Cw09U+jNSqic0HGNt0nV5e1k66DH6vaIPv1w4c+13W8xkMyNFThecitHScrydbsb/Eh3Es8HuU2ctRxo3konx2J7Yhg8aR5e+WnEDmZfq9dhhbr7yRY88N7xbJ9cKUZTdjmRXfehjk91r98rLIuM+O2F2FDYxDxkqzXz4ra1orh/VuRPv0aN+m+J/ZJX2BPL1zC+eQdXUx4lqLicZicWTvFWjbTuZhewPmZ42lBwfGpeQ71jMtx5C/FneL48j5StYt9O3u4LCYar7KFuYJ1r7I/oLrC8fO4tDihnOh3S0c1tgtNt9yu7aOtJzBGJzN4ZFmo9w/Ins942AMGTWrxoG21Xx6FocmnFPmmSc3kDuST+yM1nKeRbvmoE1YtyIcjCWyv1hnp0XM5WVpObtn3P2vZE48O0V84uHYYPxL0P+eeNyk1a4az5G7lOxrZHLg+B77Mvbw7SCP11fWHKwfoTF6eD33Gtw3apJ9Oo2LcWblG+OIyNrrWS8yY16WE5nnn8hZpnVe670Rd+jM+az9fSRHba5iY8vZa0TP7Ka3RL3fx/xIHtej12T1GPM/6ZMo8vzZHLjO5edvsPVr0uvSpjw7WrX65ak35T85qyc1eg9htVi7l+Lvz8Jh9SYZS1HpP7Mew0gOdtazev2sP3hWTrFzkhUf1nM4c214Yibt+0sci6Ij8T3Lfq0WjbpLZzFYfo2wrFP8/4LM/Fmnx/6lVbNYXwfXUm+WIzmA/OyuMjIurSxH/fEsOovlB9yAkg4=
+  </data>
+ </layer>
+ <layer name="BlockingLevel" width="50" height="50">
+  <properties>
+   <property name="blocking" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt0jsKgDAUBdFA3I1i5yLF/0Zcoxap0giCME9m4JIqkAM5m5ROh1r0dLDSwUoHKx2sdLDSwUoHKx2sdLDSwUoHKx3ftOSUpmpzfr5Hcxz3m9tqY2DHUM4+uKMrliG4I/q/2u83r9W2gI636WClg5UOVjpY6WClg5UOVn9zOM4uHxnZSw==
+  </data>
+ </layer>
+</map>

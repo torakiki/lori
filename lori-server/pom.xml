@@ -9,9 +9,9 @@
 		<relativePath>../lori-parent/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>lori-model</artifactId>
+	<artifactId>lori-server</artifactId>
 	<packaging>jar</packaging>
-	<name>Lori model</name>
+	<name>Lori Server</name>
 
 
 	<dependencies>
@@ -20,12 +20,22 @@
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>test.lori</groupId>
+			<artifactId>lori-model</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty.websocket</groupId>
+			<artifactId>websocket-client</artifactId>
+			<version>9.3.0.M1</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -31,7 +31,14 @@ public class TileMap {
     private int tilesSizeInPixel = 32;
     // TODO some way to get json file
     // private String tiledJson;
-    private BlockingTileLayer blockingLayer;
+    private BlockingTileLayer blockingLayer = new BlockingTileLayer(tilesSizeInPixel, 20, 20);
+
+    /**
+     * @see test.lori.map.BlockingTileLayer#canDrop(test.lori.map.RectangularMapEntity, test.lori.geometry.Point)
+     */
+    public boolean canDrop(RectangularMapEntity entity, Point point) {
+        return blockingLayer.canDrop(entity, point);
+    }
 
     public Point moveRight(RectangularMapEntity entity, int amount) {
         if (blockingLayer.canMoveRight(entity, amount)) {
@@ -55,8 +62,7 @@ public class TileMap {
         if (blockingLayer.canMoveDown(entity, amount)) {
             entity.move(0, amount);
         } else {
-            // TODO align bottom
-            // entity.move(bottomEdge, 0);
+            entity.alignBottomTile(tilesSizeInPixel);
         }
         return entity.position();
     }
@@ -65,8 +71,7 @@ public class TileMap {
         if (blockingLayer.canMoveUp(entity, amount)) {
             entity.move(0, -amount);
         } else {
-            // TODO align top
-            // entity.move(topEdge, 0);
+            entity.alignTopTile(tilesSizeInPixel);
         }
         return entity.position();
     }
