@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>test.lori</groupId>
 		<artifactId>lori-parent</artifactId>
-		<version>0.0.1.BETA-SNAPSHOT</version>
+		<version>0.0.2.BETA-SNAPSHOT</version>
 		<relativePath>../lori-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>lori-model</artifactId>
 	<packaging>jar</packaging>
-	<name>Lori model</name>
+	<name>Lori Model</name>
 
 
 	<dependencies>

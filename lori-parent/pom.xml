@@ -7,7 +7,7 @@
 	<artifactId>lori-parent</artifactId>
 	<packaging>pom</packaging>
 	<name>Lori parent</name>
-	<version>0.0.1.BETA-SNAPSHOT</version>
+	<version>0.0.2.BETA-SNAPSHOT</version>
 
 	<build>
 		<pluginManagement>
@@ -30,66 +30,28 @@
 		<slf4j.version>1.7.7</slf4j.version>
 		<commons.lang.version>3.1</commons.lang.version>
 		<mockito.version>1.10.8</mockito.version>
-		<logback.version>1.0.13</logback.version>
+		<logback.version>1.1.2</logback.version>
 		<jdepend.version>2.9.1</jdepend.version>
 		<netty.version>4.0.24.Final</netty.version>
-		<org.springframework.version>4.1.1.RELEASE</org.springframework.version>
+		<java.version>1.8</java.version>
 		<maven.build.timestamp.format>dd-MMM-yyyy</maven.build.timestamp.format>
 		<pdfsam.builddate>${maven.build.timestamp}</pdfsam.builddate>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>springsource-repo</id>
-			<name>SpringSource Repository</name>
-			<url>http://repo.spring.io/release</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>sonatype-snapshots</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
 	<dependencyManagement>
 		<dependencies>
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-dependencies</artifactId>
+					<version>1.2.0.BUILD-SNAPSHOT</version>
+					<type>pom</type>
+					<scope>import</scope>
+				</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
 				<version>${commons.lang.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-framework-bom</artifactId>
-				<version>${org.springframework.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-test</artifactId>
-				<version>${org.springframework.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>javax.inject</groupId>
-				<artifactId>javax.inject</artifactId>
-				<version>1</version>
 			</dependency>
 			<dependency>
 				<groupId>jdepend</groupId>

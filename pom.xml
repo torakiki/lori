@@ -16,12 +16,14 @@
 	<parent>
 		<groupId>test.lori</groupId>
 		<artifactId>lori-parent</artifactId>
-		<version>0.0.1.BETA-SNAPSHOT</version>
+		<version>0.0.2.BETA-SNAPSHOT</version>
 		<relativePath>lori-parent/pom.xml</relativePath>
 	</parent>
 
 	<modules>
-		<module>pdfsam-model</module>
+		<module>lori-model</module>
+		<module>lori-server</module>
+		<module>lori-site</module>
 	</modules>
 
 	<developers>
@@ -30,24 +32,5 @@
 			<name>Andrea Vacondio</name>
 			<email>andrea.vacondio@gmail.com</email>
 		</developer>
-	</developers>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5.1</version>
-				<configuration>
-					<tagNameFormat>v@{project.version}</tagNameFormat>
-					<localCheckout>true</localCheckout>
-					<pushChanges>false</pushChanges>
-					<autoVersionSubmodules>true</autoVersionSubmodules>
-					<releaseProfiles>release</releaseProfiles>
-					<allowTimestampedSnapshots>true</allowTimestampedSnapshots>
-					<goals>package</goals>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+	</developers>	
 </project>

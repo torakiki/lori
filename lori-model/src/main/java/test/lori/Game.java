@@ -83,7 +83,6 @@ public class Game {
             outputCommands.forEach(r -> {
                 channelGroup.write(new TextWebSocketFrame(r.toString()).retain());
                 LOG.debug("Response {} written to the group", r);
-
             });
             if (!outputCommands.isEmpty()) {
                 channelGroup.flush();
