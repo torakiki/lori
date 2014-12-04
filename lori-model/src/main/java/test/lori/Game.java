@@ -23,9 +23,10 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
@@ -52,19 +53,19 @@ public class Game {
     private boolean started = false;
     private ChannelGroup channelGroup;
 
+    private Map<String, Player> players = new HashMap<>();
+    private final TileMap map = new TileMap();
+
     public Game(ChannelGroup channelGroup) {
         require(channelGroup != null);
         this.channelGroup = channelGroup;
     }
 
-    private Set<Player> players = new HashSet<>();
-    private TileMap map = new TileMap();
-
     public void addPlayer(Player player, Point point) {
         require(!started);
         if (map.canDrop(player, point)) {
             player.dropAtPosition(point);
-            players.add(player);
+            players.put(player.getId(), player);
         }
     }
 
@@ -76,7 +77,28 @@ public class Game {
     public void start() {
         this.started = true;
         executor.scheduleWithFixedDelay(() -> {
-            inputCommands.stream().map(Response::forRequest).forEachOrdered(outputCommands::add);
+            inputCommands.stream().forEachOrdered(r -> {
+                Point point = null;
+                switch (r.command()) {
+                case "U":
+                    point = map.moveUp(players.get(r.player()), 5);
+                    break;
+                case "D":
+                    point = map.moveDown(players.get(r.player()), 5);
+                    break;
+                case "L":
+                    point = map.moveLeft(players.get(r.player()), 5);
+                    break;
+                case "R":
+                    point = map.moveRight(players.get(r.player()), 5);
+                    break;
+                default:
+                    LOG.warn("No moves for {}", r);
+                    break;
+                }
+                outputCommands.add(Response.forRequest(r, Objects.toString(point, "?,?")));
+            });
+
             inputCommands.clear();
         }, PHYSICS_TICK, PHYSICS_TICK, TimeUnit.MILLISECONDS);
         executor.scheduleWithFixedDelay(() -> {
@@ -92,6 +114,6 @@ public class Game {
     }
 
     public boolean ready() {
-        return players.size() > 3;
+        return players.size() > 1;
     }
 }

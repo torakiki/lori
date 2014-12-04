@@ -18,6 +18,8 @@
  */
 package test.lori;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * @author Andrea Vacondio
  *
@@ -25,19 +27,29 @@ package test.lori;
 public class Request {
 
     private long id;
-    private String message;
+    private String command;
+    private String playerId;
 
-    public Request(long id, String message) {
+    public Request(long id, String playerId, String command) {
         this.id = id;
-        this.message = message;
+        this.command = command;
+        this.playerId = playerId;
     }
 
     public long id() {
         return id;
     }
 
+    public String command() {
+        return command;
+    }
+
+    public String player() {
+        return playerId;
+    }
+
     @Override
     public String toString() {
-        return message;
+        return new ToStringBuilder(this).append(command).append(playerId).build();
     }
 }

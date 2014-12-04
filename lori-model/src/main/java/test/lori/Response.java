@@ -18,29 +18,41 @@
  */
 package test.lori;
 
+import static org.apache.commons.lang3.StringUtils.defaultIfBlank;
+
 /**
  * @author Andrea Vacondio
  *
  */
 public class Response {
     private long id;
-    private String message;
+    private String command;
+    private String data;
 
-    private Response(long id, String message) {
+    private Response(long id, String command, String data) {
         this.id = id;
-        this.message = message;
+        this.command = command;
+        this.data = data;
     }
 
     public long id() {
         return id;
     }
 
-    @Override
-    public String toString() {
-        return message;
+    public String command() {
+        return command;
     }
 
-    public static Response forRequest(Request req) {
-        return new Response(req.id(), req.toString());
+    public String data() {
+        return data;
+    }
+
+    @Override
+    public String toString() {
+        return data;
+    }
+
+    public static Response forRequest(Request req, String data) {
+        return new Response(req.id(), req.toString(), defaultIfBlank(data, "?,?"));
     }
 }

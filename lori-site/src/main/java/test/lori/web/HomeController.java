@@ -34,4 +34,9 @@ public class HomeController {
         maw.getModel().put("title", "Lori Arena");
         return maw;
     }
+
+    @RequestMapping("/game")
+    public String game() {
+        return "game";
+    }
 }

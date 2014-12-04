@@ -18,6 +18,12 @@
  */
 package test.lori;
 
+import io.netty.util.AttributeKey;
+
+import java.util.UUID;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import test.lori.map.RectangularMapEntity;
 
 /**
@@ -25,9 +31,20 @@ import test.lori.map.RectangularMapEntity;
  *
  */
 public class Player extends RectangularMapEntity {
+    public static final AttributeKey<String> ID_ATTRIBUTE = AttributeKey.valueOf("player");
+
+    private String id = UUID.randomUUID().toString();
 
     public Player(int width, int height) {
         super(width, height);
     }
 
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append(id).toString();
+    }
 }

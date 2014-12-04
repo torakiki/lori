@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Lori source code
- * Created on 15/nov/2014
+ * Created on 01/dic/2014
  * Copyright 2013-2014 by Andrea Vacondio (andrea.vacondio@gmail.com).
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,9 +19,10 @@
 package test.lori;
 
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.channel.group.ChannelGroup;
-import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,21 +31,19 @@ import org.slf4j.LoggerFactory;
  * @author Andrea Vacondio
  *
  */
-public class TextWebSocketHandler extends ChannelInboundHandlerAdapter {
-    private static final Logger LOG = LoggerFactory.getLogger(TextWebSocketHandler.class);
+public class PlayerCommandDecoder extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+    private static final Logger LOG = LoggerFactory.getLogger(PlayerCommandDecoder.class);
+    private final Game game;
+    private final AtomicLong ids = new AtomicLong();
 
-    private final ChannelGroup group;
-
-    public TextWebSocketHandler(ChannelGroup group) {
-        this.group = group;
+    public PlayerCommandDecoder(Game game) {
+        this.game = game;
     }
 
     @Override
-    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-        if (evt == WebSocketServerProtocolHandler.ServerHandshakeStateEvent.HANDSHAKE_COMPLETE) {
-            LOG.debug("Client {} connected, adding to group {}", ctx.channel(), group);
-            group.add(ctx.channel());
-        }
-        super.userEventTriggered(ctx, evt);
+    public void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) {
+        String player = ctx.channel().attr(Player.ID_ATTRIBUTE).get();
+        LOG.debug("Received {} from {}", msg.text(), player);
+        game.addCommand(new Request(ids.incrementAndGet(), player, msg.text()));
     }
 }

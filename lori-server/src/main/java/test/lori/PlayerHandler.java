@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Lori source code
- * Created on 16/nov/2014
+ * Created on 01/dic/2014
  * Copyright 2013-2014 by Andrea Vacondio (andrea.vacondio@gmail.com).
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,8 +19,7 @@
 package test.lori;
 
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 
 import org.slf4j.Logger;
@@ -32,11 +31,11 @@ import test.lori.geometry.Point;
  * @author Andrea Vacondio
  *
  */
-public class PlayerCreatorHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
-    private static final Logger LOG = LoggerFactory.getLogger(PlayerCreatorHandler.class);
+public class PlayerHandler extends ChannelInboundHandlerAdapter {
+    private static final Logger LOG = LoggerFactory.getLogger(PlayerHandler.class);
     private final Game game;
 
-    public PlayerCreatorHandler(Game game) {
+    public PlayerHandler(Game game) {
         this.game = game;
     }
 
@@ -45,6 +44,7 @@ public class PlayerCreatorHandler extends SimpleChannelInboundHandler<TextWebSoc
         if (evt == WebSocketServerProtocolHandler.ServerHandshakeStateEvent.HANDSHAKE_COMPLETE) {
             Player player = new Player(40, 40);
             game.addPlayer(player, new Point(50, 50));
+            ctx.channel().attr(Player.ID_ATTRIBUTE).set(player.getId());
             LOG.debug("Player {} created", player);
             if (game.ready()) {
                 game.start();
@@ -54,8 +54,4 @@ public class PlayerCreatorHandler extends SimpleChannelInboundHandler<TextWebSoc
         }
     }
 
-    @Override
-    public void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) {
-        //
-    }
 }

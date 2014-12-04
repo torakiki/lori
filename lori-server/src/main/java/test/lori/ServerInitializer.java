@@ -47,8 +47,10 @@ public class ServerInitializer extends ChannelInitializer<Channel> {
         pipeline.addLast(new HttpServerCodec());
         pipeline.addLast(new HttpObjectAggregator(64 * 1024));
         pipeline.addLast(new WebSocketServerProtocolHandler("/"));
-        pipeline.addLast(new TextWebSocketHandler(group, game));
-        pipeline.addLast(new PlayerCreatorHandler(game));
+        pipeline.addLast(new TextWebSocketHandler(group));
+        pipeline.addLast(new PlayerHandler(game));
+        pipeline.addLast(new PlayerCommandDecoder(game));
+
         pipeline.addLast("logger", new LoggingHandler(LogLevel.DEBUG));
     }
 }

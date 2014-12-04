@@ -1,0 +1,20 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml11-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:text="${title}"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+		<div>
+				<button id="connect">Connect</button>
+				<button id="disconnect" disabled="disabled">Disconnect</button>
+				<button id="up">Up</button>
+				<button id="down">Down</button>
+				<button id="left">Left</button>
+				<button id="right">Right</button>
+		</div>
+		<textarea id="logArea" rows="50" cols="100" readonly="readonly">Click connect</textarea>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="js/lori.js"></script>
+</body>
+</html>
