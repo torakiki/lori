@@ -9,9 +9,9 @@
 		</encoder>
 	</appender>
 
-	<logger name="org.xnio" level="INFO" />
-	<logger name="test.lori" level="INFO" />
-	<logger name="io.undertow" level="INFO" />
+	<logger name="org.xnio" level="DEBUG" />
+	<logger name="test.lori" level="DEBUG" />
+	<logger name="io.undertow" level="DEBUG" />
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
