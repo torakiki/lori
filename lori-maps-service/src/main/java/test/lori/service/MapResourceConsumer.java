@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Lori source code
- * Created on 14/nov/2014
+ * Created on 16/dic/2014
  * Copyright 2013-2014 by Andrea Vacondio (andrea.vacondio@gmail.com).
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,39 +16,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test.lori.util;
+package test.lori.service;
 
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import java.util.function.BiConsumer;
+
+import org.springframework.web.context.support.ServletContextResource;
+
+import test.lori.map.JsonMap;
 
 /**
- * Utility methods to ensure some required conditions are met
+ * A consumer for the Map resource
  * 
  * @author Andrea Vacondio
  *
  */
-public final class RequireUtils {
+interface MapResourceConsumer extends BiConsumer<JsonMap, ServletContextResource> {
 
-    private RequireUtils() {
-        // utility
-    }
+    /**
+     * 
+     * @return the key used to retrieve this consumer
+     */
+    String key();
 
-    public static void require(boolean condition, String message) {
-        if (!condition) {
-            throw new IllegalArgumentException(message);
-        }
-    }
-
-    public static void require(boolean condition) {
-        require(condition, "");
-    }
-
-    public static String requireNotBlank(String value) {
-        require(isNotBlank(value), "");
-        return value;
-    }
-
-    public static String requireNotBlank(String value, String message) {
-        require(isNotBlank(value), message);
-        return value;
-    }
 }

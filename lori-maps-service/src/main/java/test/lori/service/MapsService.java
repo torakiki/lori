@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Lori source code
- * Created on 14/nov/2014
+ * Created on 15/dic/2014
  * Copyright 2013-2014 by Andrea Vacondio (andrea.vacondio@gmail.com).
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,39 +16,28 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test.lori.util;
+package test.lori.service;
 
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import java.util.Set;
+
+import test.lori.map.JsonMap;
 
 /**
- * Utility methods to ensure some required conditions are met
+ * Maps related services
  * 
  * @author Andrea Vacondio
  *
  */
-public final class RequireUtils {
+public interface MapsService {
+    /**
+     * @return a view of the available maps
+     */
+    Set<JsonMap> maps();
 
-    private RequireUtils() {
-        // utility
-    }
+    /**
+     * @param key
+     * @return the map with the given key or null if no map with the given key is found
+     */
+    JsonMap map(String key);
 
-    public static void require(boolean condition, String message) {
-        if (!condition) {
-            throw new IllegalArgumentException(message);
-        }
-    }
-
-    public static void require(boolean condition) {
-        require(condition, "");
-    }
-
-    public static String requireNotBlank(String value) {
-        require(isNotBlank(value), "");
-        return value;
-    }
-
-    public static String requireNotBlank(String value, String message) {
-        require(isNotBlank(value), message);
-        return value;
-    }
 }

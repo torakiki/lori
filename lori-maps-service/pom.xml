@@ -9,9 +9,9 @@
 		<relativePath>../lori-parent/pom.xml</relativePath>
 	</parent>
 
-	<artifactId>lori-site</artifactId>
+	<artifactId>lori-maps-service</artifactId>
 	<packaging>jar</packaging>
-	<name>Lori Site</name>
+	<name>Lori Maps Service</name>
 
 	<build>
 		<plugins>
@@ -19,7 +19,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>test.lori.App</mainClass>
+					<mainClass>test.lori.maps.MApp</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -44,17 +44,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>test.lori</groupId>

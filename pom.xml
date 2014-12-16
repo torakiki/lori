@@ -24,6 +24,7 @@
 		<module>lori-model</module>
 		<module>lori-server</module>
 		<module>lori-site</module>
+		<module>lori-maps-service</module>
 	</modules>
 
 	<developers>

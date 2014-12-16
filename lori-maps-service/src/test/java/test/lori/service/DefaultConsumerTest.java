@@ -1,6 +1,6 @@
 /* 
  * This file is part of the Lori source code
- * Created on 14/nov/2014
+ * Created on 16/dic/2014
  * Copyright 2013-2014 by Andrea Vacondio (andrea.vacondio@gmail.com).
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,39 +16,31 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test.lori.util;
+package test.lori.service;
 
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
+import javax.servlet.ServletContext;
+
+import org.junit.Test;
+import org.springframework.web.context.support.ServletContextResource;
+
+import test.lori.map.JsonMap;
 
 /**
- * Utility methods to ensure some required conditions are met
- * 
  * @author Andrea Vacondio
  *
  */
-public final class RequireUtils {
+public class DefaultConsumerTest {
 
-    private RequireUtils() {
-        // utility
-    }
-
-    public static void require(boolean condition, String message) {
-        if (!condition) {
-            throw new IllegalArgumentException(message);
-        }
-    }
-
-    public static void require(boolean condition) {
-        require(condition, "");
-    }
-
-    public static String requireNotBlank(String value) {
-        require(isNotBlank(value), "");
-        return value;
-    }
-
-    public static String requireNotBlank(String value, String message) {
-        require(isNotBlank(value), message);
-        return value;
+    @Test
+    public void accept() {
+        ServletContextResource resource = new ServletContextResource(mock(ServletContext.class),
+                "/some/path/and/the/key/");
+        JsonMap map = mock(JsonMap.class);
+        new DefaultConsumer("/some").accept(map, resource);
+        verify(map).addResource(eq("/path/and/the/key/"));
     }
 }
